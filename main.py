@@ -7,6 +7,7 @@ BLUE     = (   0,   0, 255)
 MAGENTA  = ( 255,   0, 255)
 CYAN     = (   0, 255, 255)
 YELLOW   = ( 255, 255,   0)
+RED      = ( 255,   0,   0)
 
 # Screen dimensions
 SCREEN_WIDTH  = 800
@@ -26,27 +27,24 @@ class Player():
     
     def updateDir(self,key):
         if key == pygame.K_LEFT:
-            [self.dx,self.dy] = [-1,0]
+            [self.dx,self.dy] = [-1, 0]
         elif key == pygame.K_RIGHT:
-            self.dx = 1
-            self.dy = 0
+            [self.dx,self.dy] = [1, 0]
         elif key == pygame.K_UP:
-            self.dx = 0
-            self.dy = -1
+            [self.dx,self.dy] = [0, -1]
         elif key == pygame.K_DOWN:
-            self.dx = 0
-            self.dy = 1
+            [self.dx,self.dy] = [0, 1]
         else:
-            self.dx = 0
-            self.dy = 0
+            [self.dx,self.dy] = [0, 0]
     
     def updateMap(self, mapa):
-        
         self.tx += self.dx
-        if self.tx > mapa.cols:
+        # Tractamente de la posicio del jugador pq quan surti per l'esquerra
+        # apareixi per la dreta i a l'inreves
+        if self.tx > mapa.cols - 1:
             self.tx = 0
         elif self.tx < 0:
-            self.tx = mapa.cols
+            self.tx = mapa.cols - 1
         self.ty += self.dy
 
         desti = mapa.check(self.tx,self.ty)
@@ -70,16 +68,21 @@ class Player():
         pass
 
 class Map():
-    """ Definicio """
- 
+    """ Definicio del mapa. Significat de cada Item
+      W - Pared
+      . - Coco normal
+      x - Coco Energia
+      < - Jugador
+      G - Fantasme
+    """
     def __init__(self):
         self.map = ['WWWWWWWWWWWWWWWWWWW',
-                    'W .............   W',
+                    '  .............    ',
                     'W  W   W   W  ... W',
-                    'WW     .  .   .  WW',
-                    '  .    W  .   .    ',
+                    'WW     .  . G .  WW',
+                    '  .   GW  .   .    ',
                     'WW  .  .  WWWW WWWW',
-                    'W      .  .   .   W',
+                    'Wx     .  .   .   W',
                     'WWWWWWWWWWWWWWWWWWW',
                     ]
         self.rows = len(self.map)
@@ -107,9 +110,13 @@ class Map():
                     pygame.draw.rect(screen, BLUE, pygame.Rect(x, y, self.size, self.size))
                 elif item == '.':
                     pygame.draw.circle(screen, WHITE, [x+int(self.size/2),y+int(self.size/2)],int(self.size/5))
+                elif item == 'x':
+                    pygame.draw.circle(screen, RED, [x+int(self.size/2),y+int(self.size/2)],int(self.size/5))
                 elif item == '<':
-                    pygame.draw.circle(screen, YELLOW, [x+int(self.size/2),y+int(self.size/2)],int(self.size/2))
-                
+                    pygame.draw.circle(screen, YELLOW, [x+int(self.size/2),y+int(self.size/2)],int(self.size/2))         
+                elif item == 'G':
+                    pygame.draw.polygon(screen, CYAN, [(x+int(self.size/2),y),(x+self.size,y+self.size),(x,y+self.size)])         
+
 
 class Game:
     def __init__(self):
