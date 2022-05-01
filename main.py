@@ -11,7 +11,7 @@ RED      = ( 255,   0,   0)
 
 # Screen dimensions
 SCREEN_WIDTH  = 800
-SCREEN_HEIGHT = 600
+SCREEN_HEIGHT = 800
 
 class Player():
     """ Definicio """
@@ -76,14 +76,36 @@ class Map():
       G - Fantasme
     """
     def __init__(self):
-        self.map = ['WWWWWWWWWWWWWWWWWWW',
-                    '  .............    ',
-                    'W  W   W   W  ... W',
-                    'WW     .  . G .  WW',
-                    '  .   GW  .   .    ',
-                    'WW  .  .  WWWW WWWW',
-                    'Wx     .  .   .   W',
-                    'WWWWWWWWWWWWWWWWWWW',
+        self.map = ['WWWWWWWWWWWWWWWWWWWWWWWWWWWW',
+                    'W............WW............W',
+                    'W.WWWW.WWWWW.WW.WWWWW.WWWW.W',
+                    'WxWWWW.WWWWW.WW.WWWWW.WWWWxW',
+                    'W.WWWW.WWWWW.WW.WWWWW.WWWW.W',
+                    'W..........................W',
+                    'W.WWWW.WW.WWWWWWWW.WW.WWWW.W',
+                    'W.WWWW.WW.WWWWWWWW.WW.WWWW.W',
+                    'W......WW....WW....WW......W',
+                    'WWWWWW.WWWWW WW WWWWW.WWWWWW',
+                    '     W.WWWWW WW WWWWW.W     ',
+                    '     W.WW          WW.W     ',
+                    '     W.WW WWWWWWWW WW.W     ',
+                    'WWWWWW.WW W      W WW.WWWWWW',
+                    '      .   W      W   .      ',
+                    'WWWWWW.WW W      W WW.WWWWWW',
+                    '     W.WW WWWWWWWW WW.W     ',
+                    '     W.WW          WW.W     ',
+                    'WWWWWW.WW WWWWWWWW WW.WWWWWW',
+                    'W............WW............W',
+                    'W.WWWW.WWWWW.WW.WWWWW.WWWW.W',
+                    'W.WWWW.WWWWW.WW.WWWWW.WWWW.W',
+                    'Wx..WW.......  .......WW..xW',
+                    'WWW.WW.WW.WWWWWWWW.WW.WW.WWW',
+                    'WWW.WW.WW.WWWWWWWW.WW.WW.WWW',
+                    'W......WW....WW....WW......W',
+                    'W.WWWWWWWWWW.WW.WWWWWWWWWW.W',
+                    'W.WWWWWWWWWW.WW.WWWWWWWWWW.W',
+                    'W..........................W',
+                    'WWWWWWWWWWWWWWWWWWWWWWWWWWWW'
                     ]
         self.rows = len(self.map)
         self.cols = len(self.map[0])
