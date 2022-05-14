@@ -1,4 +1,4 @@
-
+import random
 import pygame
 
 BLACK    = (   0,   0,   0) 
@@ -42,10 +42,10 @@ class Ghost():
         self.sprite = sprite
     
     def update(self,key,mapa):
-        self.updatedxdy(key)
+        self.updatedxdy(key,mapa)
         self.updatexy(mapa)
 
-    def updatedxdy(self,key):
+    def updatedxdy(self,key,mapa):
         """
         L'objectiu es deixar dx i dy correctes tenint en compte el comportament
         del fantasma (aqui no es tenen en compte els obstacles).
@@ -53,7 +53,7 @@ class Ghost():
         funcio diferent per cada un d'ells.
         """
         if self.sprite == '#': #Blinky - RED
-            self.updateDirBlinky()
+            self.updateDirBlinky(mapa)
         elif self.sprite == '&': #Inky - CYAN
             self.updateDirInky(key)
         elif self.sprite == '$': #Clyde - ORANGE
@@ -61,10 +61,39 @@ class Ghost():
         else:
             pass
     
-    def updateDirBlinky(self):
+    def updateDirBlinky(self,mapa):
         """
         """
-        [self.dx,self.dy] = [0, 0] #pendiente
+        dirs=[]
+
+        if self.dx == 0:
+            if mapa.check(self.x-1,self.y) != 'W':
+                dirs.append([-1,0])
+            if mapa.check(self.x+1,self.y) != 'W':
+                dirs.append([1,0])
+        if self.dx == 1:
+            if mapa.check(self.x+1,self.y) != 'W':
+                dirs.append([1,0])
+        if self.dx == -1:
+            if mapa.check(self.x-1,self.y) != 'W':
+                dirs.append([-1,0])
+
+        if self.dy == 0:
+            if mapa.check(self.x,self.y-1) != 'W':
+                dirs.append([0,-1])
+            if mapa.check(self.x,self.y+1) != 'W':
+                dirs.append([0,1])
+        if self.dy == 1:
+            if mapa.check(self.x,self.y+1) != 'W':
+                dirs.append([0,1])
+        if self.dy == -1:
+            if mapa.check(self.x,self.y-1) != 'W':
+                dirs.append([0,-1])
+
+       
+        [self.dx,self.dy] = random.choice(dirs)
+        print(dirs,[self.dx,self.dy])
+
 
     def updateDirInky(self,key):
         if key == pygame.K_LEFT:
@@ -223,6 +252,16 @@ class Map():
 
     def check(self,x,y):
         """ Consulta una casella del mapa. Serveix per mirar la casella desti del player"""
+        if x < 0:
+            x = self.cols - 1
+        elif x > self.cols - 1:
+            x = 0
+
+        if y < 0:
+            y = self.rows - 1
+        elif y > self.rows - 1:
+            y = 0
+
         return self.map[y][x]
 
     def extract(self):
