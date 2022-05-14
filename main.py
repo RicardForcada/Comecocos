@@ -138,9 +138,9 @@ class Player():
         self.updatexy(mapa)
 
     def restoreXY(self):
-        self.lives =- 1
+        self.lives -= 1
         [self.x,self.y] = [self.initx,self.inity]
-        
+        [self.tx,self.ty] = [self.initx,self.inity]
 
     def updatedxdy(self,key):
         if key == pygame.K_LEFT:
